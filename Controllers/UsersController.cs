@@ -13,9 +13,9 @@ namespace users_api.Controllers
 
         private IUserService _usersService;
 
-        public UsersController()
+        public UsersController(IUserService userService)
         {
-            _usersService = new UserService();
+            _usersService = userService;
         }
 
         [HttpGet("all")]
