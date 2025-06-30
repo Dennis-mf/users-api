@@ -10,6 +10,8 @@ builder.Services.AddKeyedSingleton<IRandomService, RandomService>("randomSinglet
 builder.Services.AddKeyedScoped<IRandomService, RandomService>("randomScoped");
 builder.Services.AddKeyedTransient<IRandomService, RandomService>("randomTransient");
 
+Console.WriteLine(builder.Configuration["ApiBaseUrl"]);
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
