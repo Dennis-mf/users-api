@@ -30,21 +30,33 @@ namespace users_api.Controllers
         [HttpGet("async")]
         public async Task<IActionResult> GetAsync()
         {
+            Stopwatch stopWatch = Stopwatch.StartNew();
+            stopWatch.Start();
+
             var task1 = new Task<int>(() => {
                 Thread.Sleep(1000);
                 Console.WriteLine("Conexion a base de datos terminada");
                 return 10;
             });
 
+            var task2 = new Task<int>(() => {
+                Thread.Sleep(1000);
+                Console.WriteLine("Task 2 ejecutando");
+                return 8;
+            });
+
             task1.Start();
+            task2.Start();
 
             Console.WriteLine("Otro proceso");
 
             var result = await task1;
+            var result2 = await task2;
 
             Console.WriteLine("Proceso terminado");
 
-            return Ok(result);
+            stopWatch.Stop();
+            return Ok("task 1 result: " + result + " Task 2 result: " + result2 + " Time: " + stopWatch.Elapsed);
         }
     }
 }
