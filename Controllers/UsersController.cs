@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using users_api.Models;
+using users_api.Data;
 
 namespace users_api.Controllers
 {
@@ -49,31 +51,6 @@ namespace users_api.Controllers
             Repository.People.Add(user);
 
             return NoContent();
-        }
-
-        public class Repository
-        {
-            public static List<People> People = new List<People>
-            {
-                new People(){
-                    Id = 1,
-                    Name = "Juan",
-                    BirthDate = new DateTime(1990, 3, 2)
-                },
-                new People(){
-                    Id = 2,
-                    Name = "Pedro",
-                    BirthDate = new DateTime(1991, 3, 2)
-                }
-            };
-        }
-
-
-        public class People
-        {
-            public int Id {get; set;}
-            public required string Name {get; set;}
-            public DateTime BirthDate {get; set;}
         }
     }
 }
