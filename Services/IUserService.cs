@@ -1,7 +1,6 @@
-﻿namespace users_api.Services;
+﻿using users_api.Models;
 
-using users_api.Models;
-
+namespace users_api.Services;
 public interface IUserService
 {
     bool Validate(People people);

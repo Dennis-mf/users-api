@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using users_api.Models;
 using users_api.Data;
+using users_api.Services;
 
 namespace users_api.Controllers
 {
@@ -9,6 +10,14 @@ namespace users_api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+
+        private IUserService _usersService;
+
+        public UsersController()
+        {
+            _usersService = new UserService();
+        }
+
         [HttpGet("all")]
         public List<People> GetPeople()
         {
@@ -43,7 +52,7 @@ namespace users_api.Controllers
         [HttpPost]
         public IActionResult Add(People user)
         {
-            if(string.IsNullOrEmpty(user.Name))
+            if(!_usersService.Validate(user))
             {
                 return BadRequest();
             }
