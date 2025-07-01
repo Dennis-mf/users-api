@@ -10,4 +10,6 @@ public interface IUserService
     Task<User> GetUserById(int id);
 
     Task<bool> UpdateUser(User user);
+
+    Task<bool> DeleteUser(int id);
 }

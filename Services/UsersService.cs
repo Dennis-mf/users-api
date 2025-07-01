@@ -40,4 +40,10 @@ public class UserService : IUserService
         var result = await _userDao.UpdateUser(user);
         return result;
     }
+
+    public async Task<bool> DeleteUser(int id)
+    {
+        var result = await _userDao.DeleteUser(id);
+        return result;
+    }
 }

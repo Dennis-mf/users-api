@@ -52,6 +52,18 @@ namespace users_api.Controllers
             return Conflict();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var result = await _usersService.DeleteUser(id);
+            if(result)
+            {
+                return NoContent();
+            }
+
+            return Conflict();
+        }
+
         [HttpGet("search/{name}")]
         public ActionResult<People> GetUserByName(string name)
         {

@@ -70,8 +70,6 @@ public class UserDAO : IUserDao
         }
     }
 
-    //update user
-
     public async Task<bool> UpdateUser(User user)
     {
         using var connection = _dbService.GetConnection();
@@ -81,8 +79,6 @@ public class UserDAO : IUserDao
         command.Parameters.Add(new OracleParameter("name", user.Name));
         command.Parameters.Add(new OracleParameter("email", user.Email));
 
-        Console.WriteLine("User: " + user.Id + user.Name + user.Email);
-
         await connection.OpenAsync();
         var rowsAffected = await command.ExecuteNonQueryAsync();
 
@@ -91,5 +87,18 @@ public class UserDAO : IUserDao
 
     //delete user
 
+    public async Task<bool> DeleteUser(int id)
+    {
+                using var connection = _dbService.GetConnection();
+        using var command = new OracleCommand("DELETE FROM users WHERE id = :id" , connection);
+        command.BindByName = true;
+        command.Parameters.Add(new OracleParameter("id", id));
+
+
+        await connection.OpenAsync();
+        var rowsAffected = await command.ExecuteNonQueryAsync();
+
+        return rowsAffected > 0;
+    }
 
 }
