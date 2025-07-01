@@ -42,7 +42,33 @@ public class UserDAO : IUserDao
         return users;
     }
 
-    //get user by id
+    public async Task<User> GetUserById(int id)
+    {
+        using var connection = _dbService.GetConnection();
+        using var command = new OracleCommand("SELECT id, name, email FROM users WHERE id = :id" , connection);
+        command.Parameters.Add(new OracleParameter("id", id));
+
+        try{
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            if(await reader.ReadAsync())
+            {
+                return new User()
+                {
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    Email = reader.GetString(2),
+                };
+            }
+
+            return null;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
 
     //get all users
 

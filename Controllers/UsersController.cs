@@ -26,9 +26,9 @@ namespace users_api.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<People> GetUser(int id)
+        public async Task<IActionResult> GetUser(int id)
         {
-            var user = Repository.People.FirstOrDefault(n => n.Id == id);
+            var user = await _usersService.GetUserById(id);
 
             if (user == null)
             {

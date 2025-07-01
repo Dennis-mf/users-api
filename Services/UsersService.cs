@@ -28,4 +28,10 @@ public class UserService : IUserService
         var results = await _userDao.GetUsers();
         return results.ToList();
     }
+
+    public async Task<User> GetUserById(int id)
+    {
+        var result = await _userDao.GetUserById(id);
+        return result;
+    }
 }
