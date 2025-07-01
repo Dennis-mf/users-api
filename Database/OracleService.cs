@@ -1,0 +1,17 @@
+using Oracle.ManagedDataAccess.Client;
+
+namespace users_api.Database;
+public class OracleDbService
+{
+    private readonly string _connectionString;
+
+    public OracleDbService (IConfiguration configuration)
+    {
+        _connectionString = configuration.GetConnectionString("DefaultConnection");
+    }
+
+    public OracleConnection GetConnection()
+    {
+        return new OracleConnection(_connectionString);
+    }
+}

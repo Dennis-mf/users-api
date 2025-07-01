@@ -19,9 +19,10 @@ namespace users_api.Controllers
         }
 
         [HttpGet("all")]
-        public List<People> GetPeople()
+        public async Task<IActionResult> GetPeople()
         {
-            return Repository.People;
+            var result = await _usersService.GetUsers();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
