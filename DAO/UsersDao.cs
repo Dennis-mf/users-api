@@ -70,9 +70,24 @@ public class UserDAO : IUserDao
         }
     }
 
-    //get all users
-
     //update user
+
+    public async Task<bool> UpdateUser(User user)
+    {
+        using var connection = _dbService.GetConnection();
+        using var command = new OracleCommand("UPDATE users SET name = :name, email = :email WHERE id = :id" , connection);
+        command.BindByName = true;
+        command.Parameters.Add(new OracleParameter("id", user.Id));
+        command.Parameters.Add(new OracleParameter("name", user.Name));
+        command.Parameters.Add(new OracleParameter("email", user.Email));
+
+        Console.WriteLine("User: " + user.Id + user.Name + user.Email);
+
+        await connection.OpenAsync();
+        var rowsAffected = await command.ExecuteNonQueryAsync();
+
+        return rowsAffected > 0;
+    }
 
     //delete user
 

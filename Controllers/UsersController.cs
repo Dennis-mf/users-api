@@ -39,6 +39,19 @@ namespace users_api.Controllers
             
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(User user)
+        {
+            var result = await _usersService.UpdateUser(user);
+
+            if (result)
+            {
+                return NoContent();
+            }
+
+            return Conflict();
+        }
+
         [HttpGet("search/{name}")]
         public ActionResult<People> GetUserByName(string name)
         {
