@@ -39,6 +39,18 @@ namespace users_api.Controllers
             
         }
 
+        [HttpPost]
+        public async Task<ActionResult<User>> CreateUser(User user)
+        {
+            var result = await _usersService.CreateUser(user);
+
+            if(result)
+            {
+                return Created();
+            }
+            return BadRequest("No fue posible crear el usuario");
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateUser(User user)
         {
@@ -73,19 +85,6 @@ namespace users_api.Controllers
             {
                 return NotFound("User not found" + e.Message);
             }
-        }
-
-        [HttpPost]
-        public IActionResult Add(People user)
-        {
-            if(!_usersService.Validate(user))
-            {
-                return BadRequest();
-            }
-
-            Repository.People.Add(user);
-
-            return NoContent();
         }
     }
 }

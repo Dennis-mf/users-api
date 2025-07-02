@@ -70,6 +70,24 @@ public class UserDAO : IUserDao
         }
     }
 
+    public async Task<bool> CreateUser(User user)
+    {
+        using var connection = _dbService.GetConnection();
+        using var command = new OracleCommand(
+            "INSERT INTO users (name, email) VALUES (:name, :email)", connection
+        );
+
+        command.BindByName = true;
+        command.Parameters.Add(new OracleParameter("name", user.Name));
+        command.Parameters.Add(new OracleParameter("email", user.Email));
+
+        await connection.OpenAsync();
+        int rowsAffected = await command.ExecuteNonQueryAsync();
+
+        return rowsAffected > 0;
+    }
+
+
     public async Task<bool> UpdateUser(User user)
     {
         using var connection = _dbService.GetConnection();
