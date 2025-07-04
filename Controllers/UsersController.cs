@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using users_api.Models;
-using users_api.Data;
 using users_api.Services;
 
 namespace users_api.Controllers
@@ -74,17 +73,6 @@ namespace users_api.Controllers
             }
 
             return Conflict();
-        }
-
-        [HttpGet("search/{name}")]
-        public ActionResult<People> GetUserByName(string name)
-        {
-            try{
-                return Ok(Repository.People.Where(u => u.Name.ToLower().Contains(name.ToLower())).ToList());
-            } catch(Exception e)
-            {
-                return NotFound("User not found" + e.Message);
-            }
         }
     }
 }

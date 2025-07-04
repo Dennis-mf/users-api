@@ -5,10 +5,6 @@ using users_api.DAO;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddKeyedSingleton<IRandomService, RandomService>("randomSingleton");
-builder.Services.AddKeyedScoped<IRandomService, RandomService>("randomScoped");
-builder.Services.AddKeyedTransient<IRandomService, RandomService>("randomTransient");
-
 builder.Services.AddScoped<OracleDbService>();
 builder.Services.AddScoped<IUserDao, UserDAO>();
 builder.Services.AddScoped<IUserService, UserService>();

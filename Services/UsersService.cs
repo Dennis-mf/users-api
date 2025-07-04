@@ -13,16 +13,6 @@ public class UserService : IUserService
         _userDao = userDao;
     }
 
-    public bool Validate(People people)
-    {
-        if(string.IsNullOrEmpty(people.Name))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     public async Task<List<User>> GetUsers()
     {
         var results = await _userDao.GetUsers();

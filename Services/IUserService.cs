@@ -3,8 +3,6 @@
 namespace users_api.Services;
 public interface IUserService
 {
-    bool Validate(People people);
-
     Task<List<User>> GetUsers();
 
     Task<User> GetUserById(int id);
