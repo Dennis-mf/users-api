@@ -29,7 +29,7 @@ namespace users_api.Controllers
         {
             var user = await _usersService.GetUserById(id);
 
-            if (user == null)
+            if (user.Id == 0)
             {
                 return NotFound("User not found");
             }

@@ -34,32 +34,29 @@ public class UserDAO : IUserDao
         return users;
     }
 
-    public async Task<User> GetUserById(int id)
+    public async Task<UserDto> GetUserById(int id)
     {
-        using var connection = _dbService.GetConnection();
-        using var command = new OracleCommand("SELECT id, name, email FROM users WHERE id = :id" , connection);
-        command.Parameters.Add(new OracleParameter("id", id));
-
-        try{
-            await connection.OpenAsync();
-            using var reader = await command.ExecuteReaderAsync();
-
-            if(await reader.ReadAsync())
-            {
-                return new User()
-                {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    Email = reader.GetString(2),
-                };
-            }
-
-            return null;
-        }
-        catch (Exception ex)
+        var user = await _usersContext.Users.FindAsync(id);
+        if(user == null)
         {
-            throw;
+            return new UserDto
+            {
+                Id = 0,
+                Name = "",
+                Lastname = "",
+                Email = "",
+                Username = ""
+            };
         }
+        var UserDto = new UserDto
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Lastname = user.Lastname,
+            Email = user.Email,
+            Username = user.Username
+        };
+        return UserDto;
     }
 
     public async Task<bool> CreateUser(User user)

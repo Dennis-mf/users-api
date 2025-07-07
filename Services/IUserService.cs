@@ -6,7 +6,7 @@ public interface IUserService
 {
     Task<IEnumerable<UserDto>> GetUsers();
 
-    Task<User> GetUserById(int id);
+    Task<UserDto> GetUserById(int id);
 
     Task<bool> CreateUser(User user);
 
