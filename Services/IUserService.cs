@@ -8,7 +8,7 @@ public interface IUserService
 
     Task<UserDto> GetUserById(int id);
 
-    Task<bool> CreateUser(User user);
+    Task<UserDto> CreateUser(InsertUserDto user);
 
     Task<bool> UpdateUser(User user);
 

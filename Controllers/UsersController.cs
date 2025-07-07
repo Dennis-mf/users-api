@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using users_api.DTOs;
 using users_api.Models;
 using users_api.Services;
 
@@ -39,13 +40,13 @@ namespace users_api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        public async Task<ActionResult<User>> CreateUser(InsertUserDto user)
         {
             var result = await _usersService.CreateUser(user);
 
-            if(result)
+            if(result.Id != 0)
             {
-                return Created();
+                return CreatedAtAction(nameof(GetUser), new {id = result.Id}, result);
             }
             return BadRequest("No fue posible crear el usuario");
         }

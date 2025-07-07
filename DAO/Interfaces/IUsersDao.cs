@@ -5,7 +5,7 @@ public interface IUserDao
 {
     Task<IEnumerable<UserDto>> GetUsers();
     Task<UserDto> GetUserById(int id);
-    Task<bool> CreateUser(User user);
+    Task<UserDto> CreateUser(InsertUserDto user);
     Task<bool> UpdateUser(User user);
     Task<bool> DeleteUser(int id);
 }

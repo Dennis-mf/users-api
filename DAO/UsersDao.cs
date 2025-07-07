@@ -59,22 +59,27 @@ public class UserDAO : IUserDao
         return UserDto;
     }
 
-    public async Task<bool> CreateUser(User user)
+    public async Task<UserDto> CreateUser(InsertUserDto user)
     {
-        // using var connection = _dbService.GetConnection();
-        // using var command = new OracleCommand(
-        //     "INSERT INTO users (name, email) VALUES (:name, :email)", connection
-        // );
+        var newUser = new User()
+        {
+            Name = user.Name,
+            Lastname = user.Lastname,
+            Email = user.Email,
+            Username = user.Username
+        };
 
-        // command.BindByName = true;
-        // command.Parameters.Add(new OracleParameter("name", user.Name));
-        // command.Parameters.Add(new OracleParameter("email", user.Email));
+        await _usersContext.Users.AddAsync(newUser);
+        await _usersContext.SaveChangesAsync();
 
-        // await connection.OpenAsync();
-        // int rowsAffected = await command.ExecuteNonQueryAsync();
-
-        // return rowsAffected > 0;
-        return true;
+        return new UserDto
+        {
+            Id = newUser.Id,
+            Name = newUser.Name,
+            Lastname = newUser.Lastname,
+            Email = newUser.Email,
+            Username = newUser.Username
+        };
     }
 
 

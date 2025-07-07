@@ -26,7 +26,7 @@ public class UserService : IUserService
         return result;
     }
 
-    public async Task<bool> CreateUser(User user)
+    public async Task<UserDto> CreateUser(InsertUserDto user)
     {
         var result = await _userDao.CreateUser(user);
         return result;
