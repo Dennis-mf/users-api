@@ -8,6 +8,12 @@ public class User
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id {get; set;} = 0;
+    
     public required string Name {get; set;} = "";
+
     public required string Email {get; set;} = "";
+
+    public string Username { get; set; } = "";
+
+    public string Lastname { get; set; } = "";
 }
