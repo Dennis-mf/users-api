@@ -23,14 +23,15 @@ public class UserDAO : IUserDao
 
     public async Task<IEnumerable<UserDto>> GetUsers()
     {
-        return _usersContext.Users.Select(u => new UserDto
-        {
+        var users = await _usersContext.Users.Select(u => new UserDto {
             Id = u.Id,
             Name = u.Name,
             Lastname = u.Lastname,
-            Username = u.Username,
             Email = u.Email,
-        });
+            Username = u.Username,
+        }).ToListAsync();
+
+        return users;
     }
 
     public async Task<User> GetUserById(int id)
