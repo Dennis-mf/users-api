@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using users_api.DTOs;
 using users_api.Models;
 
 namespace users_api.Services;
@@ -13,7 +14,7 @@ public class UserService : IUserService
         _userDao = userDao;
     }
 
-    public async Task<List<User>> GetUsers()
+    public async Task<IEnumerable<UserDto>> GetUsers()
     {
         var results = await _userDao.GetUsers();
         return results.ToList();

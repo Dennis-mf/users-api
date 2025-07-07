@@ -1,9 +1,10 @@
-﻿using users_api.Models;
+﻿using users_api.DTOs;
+using users_api.Models;
 
 namespace users_api.Services;
 public interface IUserService
 {
-    Task<List<User>> GetUsers();
+    Task<IEnumerable<UserDto>> GetUsers();
 
     Task<User> GetUserById(int id);
 

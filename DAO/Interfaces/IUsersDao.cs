@@ -1,8 +1,9 @@
+using users_api.DTOs;
 using users_api.Models;
 
 public interface IUserDao
 {
-    Task<List<User>> GetUsers();
+    Task<IEnumerable<UserDto>> GetUsers();
     Task<User> GetUserById(int id);
     Task<bool> CreateUser(User user);
     Task<bool> UpdateUser(User user);

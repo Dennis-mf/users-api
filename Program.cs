@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<OracleDbService>();
 builder.Services.AddScoped<IUserDao, UserDAO>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<UsersContext, UsersContext>();
 
 //ef connection
 builder.Services.AddDbContext<UsersContext>(options => {
