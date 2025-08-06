@@ -32,9 +32,9 @@ public class UserService : IUserService
         return result;
     }
 
-    public async Task<bool> UpdateUser(User user)
+    public async Task<UserDto> UpdateUser(int id, UpdateUserDto user)
     {
-        var result = await _userDao.UpdateUser(user);
+        var result = await _userDao.UpdateUser(id, user);
         return result;
     }
 

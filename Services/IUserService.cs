@@ -10,7 +10,7 @@ public interface IUserService
 
     Task<UserDto> CreateUser(InsertUserDto user);
 
-    Task<bool> UpdateUser(User user);
+    Task<UserDto> UpdateUser(int id, UpdateUserDto user);
 
     Task<bool> DeleteUser(int id);
 }

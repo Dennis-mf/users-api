@@ -83,20 +83,31 @@ public class UserDAO : IUserDao
     }
 
 
-    public async Task<bool> UpdateUser(User user)
+    public async Task<UserDto> UpdateUser(int id, UpdateUserDto user)
     {
-        // using var connection = _dbService.GetConnection();
-        // using var command = new OracleCommand("UPDATE users SET name = :name, email = :email WHERE id = :id" , connection);
-        // command.BindByName = true;
-        // command.Parameters.Add(new OracleParameter("id", user.Id));
-        // command.Parameters.Add(new OracleParameter("name", user.Name));
-        // command.Parameters.Add(new OracleParameter("email", user.Email));
+        var updatedUser = await _usersContext.Users.FindAsync(id);
 
-        // await connection.OpenAsync();
-        // var rowsAffected = await command.ExecuteNonQueryAsync();
+        if(updatedUser == null)
+        {
+            return new UserDto{};
+        }
 
-        // return rowsAffected > 0;
-        return true;
+        updatedUser.Name = user.Name;
+        updatedUser.Lastname = user.Lastname;
+        updatedUser.Username = user.Username;
+        updatedUser.Email = user.Email;
+
+        await _usersContext.SaveChangesAsync();
+        
+        var userDto = new UserDto
+        {
+            Id = updatedUser.Id,
+            Name = updatedUser.Name,
+            Lastname = updatedUser.Lastname,
+            Username = updatedUser.Username,
+            Email = updatedUser.Email,
+        };
+        return userDto;
     }
 
     //delete user

@@ -51,14 +51,14 @@ namespace users_api.Controllers
             return BadRequest("No fue posible crear el usuario");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser(User user)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UpdateUserDto user)
         {
-            var result = await _usersService.UpdateUser(user);
+            var result = await _usersService.UpdateUser(id, user);
 
-            if (result)
+            if (result.Id != 0)
             {
-                return NoContent();
+                return Ok(result);
             }
 
             return Conflict();
