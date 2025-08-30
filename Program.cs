@@ -1,17 +1,22 @@
 using users_api.Services;
 using users_api.Database;
 using users_api.DAO;
+using users_api.Models;
+using System.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddKeyedSingleton<IRandomService, RandomService>("randomSingleton");
-builder.Services.AddKeyedScoped<IRandomService, RandomService>("randomScoped");
-builder.Services.AddKeyedTransient<IRandomService, RandomService>("randomTransient");
-
 builder.Services.AddScoped<OracleDbService>();
 builder.Services.AddScoped<IUserDao, UserDAO>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<UsersContext, UsersContext>();
+
+//ef connection
+builder.Services.AddDbContext<UsersContext>(options => {
+    options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

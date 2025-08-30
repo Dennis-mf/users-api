@@ -1,17 +1,16 @@
-﻿using users_api.Models;
+﻿using users_api.DTOs;
+using users_api.Models;
 
 namespace users_api.Services;
 public interface IUserService
 {
-    bool Validate(People people);
+    Task<IEnumerable<UserDto>> GetUsers();
 
-    Task<List<User>> GetUsers();
+    Task<UserDto> GetUserById(int id);
 
-    Task<User> GetUserById(int id);
+    Task<UserDto> CreateUser(InsertUserDto user);
 
-    Task<bool> CreateUser(User user);
-
-    Task<bool> UpdateUser(User user);
+    Task<UserDto> UpdateUser(int id, UpdateUserDto user);
 
     Task<bool> DeleteUser(int id);
 }

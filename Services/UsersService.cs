@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using users_api.DTOs;
 using users_api.Models;
 
 namespace users_api.Services;
@@ -13,37 +14,27 @@ public class UserService : IUserService
         _userDao = userDao;
     }
 
-    public bool Validate(People people)
-    {
-        if(string.IsNullOrEmpty(people.Name))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    public async Task<List<User>> GetUsers()
+    public async Task<IEnumerable<UserDto>> GetUsers()
     {
         var results = await _userDao.GetUsers();
         return results.ToList();
     }
 
-    public async Task<User> GetUserById(int id)
+    public async Task<UserDto> GetUserById(int id)
     {
         var result = await _userDao.GetUserById(id);
         return result;
     }
 
-    public async Task<bool> CreateUser(User user)
+    public async Task<UserDto> CreateUser(InsertUserDto user)
     {
         var result = await _userDao.CreateUser(user);
         return result;
     }
 
-    public async Task<bool> UpdateUser(User user)
+    public async Task<UserDto> UpdateUser(int id, UpdateUserDto user)
     {
-        var result = await _userDao.UpdateUser(user);
+        var result = await _userDao.UpdateUser(id, user);
         return result;
     }
 

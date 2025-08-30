@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using users_api.DTOs;
 using users_api.Models;
-using users_api.Data;
 using users_api.Services;
 
 namespace users_api.Controllers
@@ -30,7 +30,7 @@ namespace users_api.Controllers
         {
             var user = await _usersService.GetUserById(id);
 
-            if (user == null)
+            if (user.Id == 0)
             {
                 return NotFound("User not found");
             }
@@ -40,25 +40,25 @@ namespace users_api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        public async Task<ActionResult<User>> CreateUser(InsertUserDto user)
         {
             var result = await _usersService.CreateUser(user);
 
-            if(result)
+            if(result.Id != 0)
             {
-                return Created();
+                return CreatedAtAction(nameof(GetUser), new {id = result.Id}, result);
             }
             return BadRequest("No fue posible crear el usuario");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser(User user)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UpdateUserDto user)
         {
-            var result = await _usersService.UpdateUser(user);
+            var result = await _usersService.UpdateUser(id, user);
 
-            if (result)
+            if (result.Id != 0)
             {
-                return NoContent();
+                return Ok(result);
             }
 
             return Conflict();
@@ -74,17 +74,6 @@ namespace users_api.Controllers
             }
 
             return Conflict();
-        }
-
-        [HttpGet("search/{name}")]
-        public ActionResult<People> GetUserByName(string name)
-        {
-            try{
-                return Ok(Repository.People.Where(u => u.Name.ToLower().Contains(name.ToLower())).ToList());
-            } catch(Exception e)
-            {
-                return NotFound("User not found" + e.Message);
-            }
         }
     }
 }
