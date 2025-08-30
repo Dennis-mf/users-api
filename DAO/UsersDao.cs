@@ -114,16 +114,15 @@ public class UserDAO : IUserDao
 
     public async Task<bool> DeleteUser(int id)
     {
-        // using var connection = _dbService.GetConnection();
-        // using var command = new OracleCommand("DELETE FROM users WHERE id = :id" , connection);
-        // command.BindByName = true;
-        // command.Parameters.Add(new OracleParameter("id", id));
+        var user = await _usersContext.Users.FindAsync(id);
 
+        if (user == null)
+        {
+            return false;
+        }
 
-        // await connection.OpenAsync();
-        // var rowsAffected = await command.ExecuteNonQueryAsync();
-
-        // return rowsAffected > 0;
+        _usersContext.Users.Remove(user);
+        await _usersContext.SaveChangesAsync();
         return true;
     }
 
